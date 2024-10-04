@@ -1,2 +1,52 @@
-# Project exclude paths
-/env/
+# Python
+*.py[cod]
+__pycache__/
+*.pyo
+*.pyd
+
+# Удаляем pyenv-версии
+.python-version
+
+# Django
+*.sqlite3
+db.sqlite3
+
+# Миграции
+*/migrations/*.py
+*/migrations/__init__.py
+
+# Логирование
+*.log
+
+# Параметры среды
+.env
+*.env
+
+# Папка медиа и статических файлов
+/media/
+staticfiles/
+
+# Кэшированные файлы
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Удаляем виртуальные окружения
+env/
+venv/
+ENV/
+ENV*/
+
+# Если используется Jupyter Notebook
+.ipynb_checkpoints
+
+# И другие временные файлы
+*~
+*.bak
+*.tmp
+*.swp
+
+# IDE настройки (например, для VSCode)
+.vscode/
+.idea/
