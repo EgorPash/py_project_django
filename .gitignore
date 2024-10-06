@@ -11,10 +11,6 @@ __pycache__/
 *.sqlite3
 db.sqlite3
 
-# Миграции
-*/migrations/*.py
-*/migrations/__init__.py
-
 # Логирование
 *.log
 
