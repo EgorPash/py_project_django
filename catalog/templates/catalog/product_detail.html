@@ -1,26 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ object.name }}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.24/dist/css/uikit.min.css" />
-</head>
-<body>
 {% extends 'catalog/base.html' %}
+{% load media_tags %}
+
 {% block title %}{{ object.name }}{% endblock %}
-{% for product in products %}
-    {% include 'catalog/menu.html' with product=product %}
-{% endfor %}
 
 {% block content %}
     <div class="uk-container uk-margin-top">
         <h1>{{ object.name }}</h1>
         <p>{{ object.description }}</p>
         <p>Price: ${{ object.price }}</p>
-{% endblock %}
         {% if object.image %}
             <img class="card-img-top" src="{{ object.image|media_url }}" alt="{{ object.name }}" />
         {% endif %}
     </div>
-</body>
-</html>
+{% endblock %}
 

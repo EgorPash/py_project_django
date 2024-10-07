@@ -5,7 +5,7 @@ from catalog.models import Product
 
 def home_view(request):
     products = Product.objects.all()  # Получаем все продукты
-    context = {'object_list': products}  # Формируем контекст
+    context = {'products': products}  # Формируем контекст
     return render(request, 'catalog/home.html', context)
 
 def contact_view(request):
