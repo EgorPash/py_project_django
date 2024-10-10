@@ -15,6 +15,7 @@
                    {% include 'catalog/menu.html' with product=product %}
                 {% endfor %}
             </div>
+        <a href="{% url 'blog:blogpost_list' %}" class="uk-button uk-button-secondary">Go to Blog</a>
         {% endblock %}
     </div>
 </body>
