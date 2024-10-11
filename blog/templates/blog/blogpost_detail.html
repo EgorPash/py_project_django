@@ -1,0 +1,15 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+    <div class="uk-container uk-margin-top">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.content }}</p>
+        <p><strong>Views:</strong> {{ post.views_count }}</p>
+        <img src="{{ post.preview_image.url }}" alt="{{ post.title }}" />
+        <a href="{% url 'blog:blogpost_update' post.pk %}" class="uk-button uk-button-secondary">Edit</a>
+        <form action="{% url 'blog:blogpost_delete' post.pk %}" method="POST" style="display:inline;">
+            {% csrf_token %}
+            <input type="submit" value="Delete" class="uk-button uk-button-danger" />
+        </form>
+    </div>
+{% endblock %}

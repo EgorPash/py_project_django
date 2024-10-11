@@ -1,0 +1,12 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+    <div class="uk-container uk-margin-top">
+        <h1>Are you sure you want to delete "{{ post.title }}"?</h1>
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" value="Yes, delete it!" class="uk-button uk-button-danger" />
+            <a href="{% url 'blog:blogpost_detail' post.pk %}" class="uk-button uk-button-secondary">Cancel</a>
+        </form>
+    </div>
+{% endblock %}
