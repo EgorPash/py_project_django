@@ -2,12 +2,14 @@ from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from blog.models import BlogPost
+from django.forms import BlogPostForm
 
 
 class BlogPostListView(ListView):
     model = BlogPost
-    template_name = 'blog/blogpost_list.html'
-    context_object_name = 'blog_posts'
+    form_class = BlogPostForm
+    template_name = 'blog/blogpost_form.html'
+    success_url = reverse_lazy('blog:blogpost_list')
 
     def get_queryset(self):
         return BlogPost.objects.filter(is_published=True)
@@ -30,15 +32,11 @@ class BlogPostCreateView(CreateView):
     fields = ['title', 'content', 'preview_image', 'is_published']
     template_name = 'blog/blogpost_form.html'
 
-    def __init__(self, **kwargs):
-        super().__init__(kwargs)
-        self.object = None
-
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.slug = slugify(self.object.title)
         self.object.save()
-        return super().form_valid(form)  # Вызов super() обеспечивает нужный редирект
+        return super().form_valid(form)
 
 
 class BlogPostUpdateView(UpdateView):
