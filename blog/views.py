@@ -25,6 +25,7 @@ class BlogPostCreateView(CreateView):
     model = BlogPost
     fields = ['title', 'content', 'preview_image', 'is_published']
     template_name = 'blog/blogpost_form.html'
+    success_url = reverse_lazy('blog:blogpost_list')
 
     def form_valid(self, form):
         blog_post = form.save(commit=False)

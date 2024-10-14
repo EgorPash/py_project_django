@@ -4,7 +4,7 @@
     <div class="uk-container uk-margin-top">
         <h1>Blog Posts</h1>
         <ul>
-            {% for post in blog_posts %}
+            {% for post in object_list %}
                 <li>
                     <a href="{% url 'blog:blogpost_detail' post.pk %}">{{ post.title }}</a>
                 </li>

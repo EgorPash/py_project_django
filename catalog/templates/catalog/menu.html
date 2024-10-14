@@ -1,6 +1,6 @@
 <div class="product">
     <h2>{{ product.name }}</h2>
-    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    <img src="{{ product.image }}" alt="{{ product.name }}">
     <p>{{ product.description }}</p>
     <p>Price: {{ product.price }}</p>
     <a href="{% url 'catalog:product_detail' product.pk %}" class="uk-button uk-button-primary">View Details</a>
