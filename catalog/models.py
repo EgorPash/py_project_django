@@ -32,3 +32,12 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='versions')
+    version_number = models.CharField(max_length=255)
+    version_name = models.CharField(max_length=255)
+    is_current = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.version_number} - {self.product.name}"
