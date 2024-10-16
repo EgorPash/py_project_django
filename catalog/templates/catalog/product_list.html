@@ -1,0 +1,12 @@
+<h1>Список продуктов</h1>
+<ul>
+    {% for product in products %}
+        <li>
+            <a href="{% url 'catalog:product_detail' product.pk %}">{{ product.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'catalog:product_create' %}" class="btn btn-primary">Создать новый продукт</a>
+{% endif %}

@@ -1,9 +1,8 @@
 from django.db import models
+from my_project import settings
 
 
 class Category(models.Model):
-    DoesNotExist = None
-    objects = None
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
 
@@ -16,7 +15,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    objects = None
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='products')
     name = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to='products/')
