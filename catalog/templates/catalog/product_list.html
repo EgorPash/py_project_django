@@ -10,3 +10,6 @@
 {% if user.is_authenticated %}
     <a href="{% url 'catalog:product_create' %}" class="btn btn-primary">Создать новый продукт</a>
 {% endif %}
+{% if product.user == request.user %}
+    <a href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
+{% endif %}

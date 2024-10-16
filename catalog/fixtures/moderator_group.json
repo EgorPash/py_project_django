@@ -1,0 +1,26 @@
+[
+    {
+        "model": "auth.group",
+        "pk": 1,
+        "fields": {
+            "name": "moderator",
+            "permissions": [
+                {
+                    "name": "can_change_product",
+                    "content_type": "catalog.Product",
+                    "codename": "change_product"
+                },
+                {
+                    "name": "can_publish_product",
+                    "content_type": "catalog.Product",
+                    "codename": "publish_product"
+                },
+                {
+                    "name": "can_unpublish_product",
+                    "content_type": "catalog.Product",
+                    "codename": "unpublish_product"
+                }
+            ]
+        }
+    }
+]

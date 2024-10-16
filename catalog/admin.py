@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from django.contrib.auth.models import Group
 from catalog.models import Product, Category
 
 
@@ -10,6 +10,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'price', 'category')
-    list_filter = ('category',)
+    list_display = ('name', 'is_published', 'user')
     search_fields = ('name', 'description')
+    list_filter = ('is_published',)
+
+admin.site.register(Product, ProductAdmin)

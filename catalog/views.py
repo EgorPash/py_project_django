@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -31,8 +32,13 @@ class ProductCreateView(CreateView):
 
 class ProductUpdateView(UpdateView):
     model = Product
-    form_class = ProductForm
+    fields = ['name', 'description', 'image', 'price', 'is_published']
     template_name = 'catalog/product_form.html'
+
+    def form_valid(self, form):
+        if form.instance.user != self.request.user and not self.request.user.has_perm('catalog.change_product'):
+            raise PermissionDenied()
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('catalog:product_detail', args=[self.object.pk])

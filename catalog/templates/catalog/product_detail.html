@@ -11,6 +11,12 @@
         {% if object.image %}
             <img class="card-img-top" src="{{ object.image|media_url }}" alt="{{ object.name }}" />
         {% endif %}
+        {% if product.user == request.user %}
+           <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-secondary">Редактировать</a>
+        {% endif %}
+        {% if perms.catalog.change_product %}
+            <button class="btn btn-danger">Изменить описание</button>
+        {% endif %}
     </div>
 {% endblock %}
 
