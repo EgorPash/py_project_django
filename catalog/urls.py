@@ -3,7 +3,8 @@ from catalog import views
 
 app_name = 'catalog'
 urlpatterns = [
-    path('', views.ProductListView.as_view(), name='product_list'),
+    path('', views.HomeView.as_view(), name='home'),
+    path('list/', views.ProductListView.as_view(), name='product_list'),
     path('create/', views.ProductCreateView.as_view(), name='product_create'),
     path('update/<int:pk>/', views.ProductUpdateView.as_view(), name='product_update'),
     path('delete/<int:pk>/', views.ProductDeleteView.as_view(), name='product_delete'),
