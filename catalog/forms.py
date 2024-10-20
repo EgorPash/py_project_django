@@ -1,8 +1,9 @@
 from django import forms
+from .mixins import BootstrapFormMixin
 from catalog.models import Product, Version
 
 
-class ProductForm(forms.ModelForm):
+class ProductForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Product
         fields = ['name', 'description', 'image', 'category', 'price']
@@ -21,7 +22,7 @@ class ProductForm(forms.ModelForm):
             raise forms.ValidationError("Описание продукта содержит запрещённые слова.")
         return description
 
-class VersionForm(forms.ModelForm):
+class VersionForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Version
         fields = ['product', 'version_number', 'version_name', 'is_current']
