@@ -41,6 +41,11 @@ class ProductDetailView(DetailView):
     template_name = 'catalog/product_detail.html'
     context_object_name = 'object'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active_version'] = self.object.versions.filter(is_current=True).first()
+        return context
+
 class VersionCreateView(CreateView):
     model = Version
     form_class = VersionForm
@@ -48,8 +53,7 @@ class VersionCreateView(CreateView):
 
     def form_valid(self, form):
         version = form.save(commit=False)
-        version.is_current = True  # Установите текущую версию, если это необходимо
-        print(self.request.kwargs)
+        version.product = Product.objects.get(pk=self.kwargs.get("pk"))
         version.save()
         return super().form_valid(form)
 
@@ -57,6 +61,8 @@ class VersionCreateView(CreateView):
 class VersionUpdateView(UpdateView):
     model = Version
     form_class = VersionForm
+    template_name = 'catalog/version_update.html'
+    success_url = reverse_lazy('catalog:product_list')
 
     def get_success_url(self):
         return reverse_lazy('catalog:product_detail', args=[self.object.product.pk])

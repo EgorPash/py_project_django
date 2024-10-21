@@ -9,12 +9,17 @@
     <img src="{{ product.image|media_url }}" class="card-img-top" alt="..." style="height: 200px">
     <div class="card-body">
         <h5 class="card-title">{{product.name}}</h5>
-        <p>Active Version: {{ product.active_version.version_number }} - {{ product.active_version.version_name }}</p>
         <p class="card-text">{{product.description}}</p>
         <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary">Посмотреть</a>
         <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-primary">Изменить</a>
         <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-primary">Удалить</a>
         <a href="{% url 'catalog:version_create' product.pk %}" class="btn btn-primary">Создать версию</a>
+    {% if product.active_version %}
+            <p><strong>Active Version:</strong> {{ product.active_version.version_name }}</p>
+            <a href="{% url 'catalog:version_update' product.active_version.pk %}" class="btn btn-primary">Изменить версию</a>
+        {% else %}
+            <p><strong>No active version available.</strong></p>
+        {% endif %}
     </div>
 </div>
 {% endfor %}
