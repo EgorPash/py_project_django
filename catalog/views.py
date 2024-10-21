@@ -44,13 +44,19 @@ class ProductDetailView(DetailView):
 class VersionCreateView(CreateView):
     model = Version
     form_class = VersionForm
-    template_name = 'catalog/version_form.html'
     success_url = reverse_lazy('catalog:product_list')
+
+    def form_valid(self, form):
+        version = form.save(commit=False)
+        version.is_current = True  # Установите текущую версию, если это необходимо
+        print(self.request.kwargs)
+        version.save()
+        return super().form_valid(form)
+
 
 class VersionUpdateView(UpdateView):
     model = Version
     form_class = VersionForm
-    template_name = 'catalog/version_form.html'
 
     def get_success_url(self):
         return reverse_lazy('catalog:product_detail', args=[self.object.product.pk])

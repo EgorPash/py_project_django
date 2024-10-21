@@ -25,7 +25,7 @@ class ProductForm(BootstrapFormMixin, forms.ModelForm):
 class VersionForm(BootstrapFormMixin, forms.ModelForm):
     class Meta:
         model = Version
-        fields = ['product', 'version_number', 'version_name', 'is_current']
+        fields = ['version_number', 'version_name', 'is_current']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
