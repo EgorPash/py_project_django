@@ -1,9 +1,7 @@
 from django.db import models
-
+from users.models import CustomUser
 
 class Category(models.Model):
-    DoesNotExist = None
-    objects = None
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
 
@@ -16,7 +14,6 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    objects = None
     name = models.CharField(max_length=255)
     description = models.TextField()
     image = models.ImageField(upload_to='products/')
@@ -25,6 +22,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     manufactured_at = models.DateTimeField(null=True, blank=True)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='products', null=True, blank=True)
 
     def __str__(self):
         return self.name

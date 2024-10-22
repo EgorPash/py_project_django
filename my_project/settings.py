@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+AUTH_USER_MODEL = 'users.CustomUser'
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,7 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog',
     'blog',
+    'users',
 ]
+
+LOGIN_URL = '/accounts/login/'  # URL для аутентификации
+LOGIN_REDIRECT_URL = '/'  # URL для перенаправления после входа
+LOGOUT_REDIRECT_URL = '/'  # URL для перенаправления после выхода
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
