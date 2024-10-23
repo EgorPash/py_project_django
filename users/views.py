@@ -9,8 +9,8 @@ from django.http import HttpResponse
 from .models import CustomUser
 from django.views.generic import TemplateView
 
-class HomePageView(TemplateView):
-    template_name = 'users/home.html'
+class UserPageView(TemplateView):
+    template_name = 'users/user_page.html'
 
 class RegisterView(CreateView):
     form_class = CustomUserCreationForm

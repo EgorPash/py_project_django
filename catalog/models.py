@@ -23,13 +23,17 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     manufactured_at = models.DateTimeField(null=True, blank=True)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='products', null=True, blank=True)
+    is_published = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = 'Product'
-        verbose_name_plural = 'Products'
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+            ("can_change_description", "Can change product description"),
+            ("can_change_category", "Can change product category"),
+        ]
 
 class Version(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='versions')
