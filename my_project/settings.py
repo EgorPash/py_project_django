@@ -55,7 +55,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 LOGIN_URL = '/accounts/login/'  # URL для аутентификации
 LOGIN_REDIRECT_URL = '/'  # URL для перенаправления после входа
-LOGOUT_REDIRECT_URL = '/'  # URL для перенаправления после выхода
+LOGOUT_REDIRECT_URL = 'users:login'  # URL для перенаправления после выхода
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

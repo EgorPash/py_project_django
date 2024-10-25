@@ -16,3 +16,4 @@ class Command(BaseCommand):
 
         user.set_password('EgorPash2307')
         user.save()
+

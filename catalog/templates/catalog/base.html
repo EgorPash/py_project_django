@@ -15,7 +15,12 @@
                     <li><a href="{% url 'catalog:home' %}">Home</a></li>
                     <li><a href="{% url 'blog:blogpost_list' %}">Blog</a></li>
                     <li><a href="{% url 'catalog:product_list' %}">Product_List</a></li>
-                    <li><a href="{% url 'users:logout' %}">Logout</a></li>
+                    <li><form method="post" action="{% url 'users:logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="dropdown-item">Logout
+                    </button>
+                    </form>
+                    </li>
                     {% else %}
                     <li><a href="{% url 'users:login' %}">Login</a></li>
                     <li><a href="{% url 'users:register' %}">Register</a></li>
