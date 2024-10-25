@@ -11,10 +11,14 @@
         <nav class="uk-navbar-container" uk-navbar>
             <div class="uk-navbar-left">
                 <ul class="uk-navbar-nav">
+                    {% if user.is_authenticated %}
                     <li><a href="{% url 'catalog:home' %}">Home</a></li>
                     <li><a href="{% url 'blog:blogpost_list' %}">Blog</a></li>
                     <li><a href="{% url 'catalog:product_list' %}">Product_List</a></li>
-
+                    <li><a href="{% url 'users:logout' %}">Logout</a></li>
+                    {% else %}
+                    <li><a href="{% url 'users:login' %}">Login</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>

@@ -6,13 +6,14 @@ from .forms import CustomUserCreationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
-from .models import CustomUser
+from .models import User
 from django.views.generic import TemplateView
 
 class UserPageView(TemplateView):
     template_name = 'users/user_page.html'
 
 class RegisterView(CreateView):
+    model = User
     form_class = CustomUserCreationForm
     template_name = 'users/register.html'
     success_url = reverse_lazy('login')
@@ -29,16 +30,13 @@ class RegisterView(CreateView):
         )
         return super().form_valid(form)
 
-class CustomLoginView(LoginView):
-    template_name = 'users/login.html'
-
 class PasswordResetView(CreateView):
     template_name = 'users/password_reset.html'
 
     def post(self, request, **kwargs):
         email = request.POST.get('email')
         try:
-            user = CustomUser.objects.get(email=email)
+            user = User.objects.get(email=email)
             new_password = str(random.randint(100000, 999999))
             user.password = make_password(new_password)
             user.save()
@@ -51,6 +49,6 @@ class PasswordResetView(CreateView):
                 fail_silently=False,
             )
             return HttpResponse('Пароль сброшен! Проверьте почту.')
-        except CustomUser.DoesNotExist:
+        except User.DoesNotExist:
             return HttpResponse('Пользователь с такой почтой не найден.')
 
