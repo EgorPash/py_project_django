@@ -53,8 +53,8 @@ EMAIL_HOST_USER = 'egor.pashutsky@yandex.ru'  # Ваш email
 EMAIL_HOST_PASSWORD = 'dhduusctloqivlyx'  # Ваш пароль
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-LOGIN_URL = '/accounts/login/'  # URL для аутентификации
-LOGIN_REDIRECT_URL = '/'  # URL для перенаправления после входа
+LOGIN_URL = '/'  # URL для аутентификации
+LOGIN_REDIRECT_URL = 'catalog:home'  # URL для перенаправления после входа
 LOGOUT_REDIRECT_URL = 'users:login'  # URL для перенаправления после выхода
 
 MIDDLEWARE = [
