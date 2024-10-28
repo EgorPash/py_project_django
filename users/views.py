@@ -1,5 +1,6 @@
 from django.contrib.auth import login
-from django.views.generic import CreateView
+from django.shortcuts import redirect
+from django.views.generic import CreateView, TemplateView
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.conf import settings
@@ -39,7 +40,7 @@ class RegisterView(CreateView):
             fail_silently=False,
         )
 
-class PasswordResetForm(PasswordResetView):
+class PasswordResetForm(TemplateView):
     def post(self, request, *args, **kwargs):
         email = request.POST.get('email')
         try:
@@ -51,7 +52,7 @@ class PasswordResetForm(PasswordResetView):
         except User.DoesNotExist:
             # Обработка случая, когда пользователь не найден
             pass
-        return super().post(request, *args, **kwargs)
+        return redirect("/")
 
     def send_confirmation_email(self, email, new_password):
         subject = 'Ваш новый пароль'
