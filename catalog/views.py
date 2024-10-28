@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
 from catalog.models import Product, Version, Category
@@ -41,10 +42,22 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('catalog:product_detail', args=[self.object.pk])
 
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.owner != request.user:
+            return redirect('catalog:product_list')
+        return super().dispatch(request, *args, **kwargs)
+
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'catalog/product_confirm_delete.html'
     success_url = reverse_lazy('catalog:product_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.owner != request.user:
+            return redirect('catalog:product_list')
+        return super().dispatch(request, *args, **kwargs)
 
 class ProductDetailView(DetailView):
     model = Product

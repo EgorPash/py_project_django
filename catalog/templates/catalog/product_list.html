@@ -11,8 +11,10 @@
         <h5 class="card-title">{{product.name}}</h5>
         <p class="card-text">{{product.description}}</p>
         <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary">Посмотреть</a>
+        {% if user.is_authenticated and object.owner == user %}
         <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-primary">Изменить</a>
         <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-primary">Удалить</a>
+        {% endif %}
         <a href="{% url 'catalog:version_create' product.pk %}" class="btn btn-primary">Создать версию</a>
     {% if product.active_version %}
             <p><strong>Active Version:</strong> {{ product.active_version.version_name }}</p>
