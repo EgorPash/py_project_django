@@ -4,6 +4,10 @@ from django.urls import reverse_lazy
 from catalog.models import Product, Version, Category
 from catalog.forms import ProductForm, VersionForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+from catalog.services import get_categories
+
 
 class HomeView(TemplateView):
     template_name = 'catalog/home.html'
@@ -27,7 +31,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
+        context['categories'] = get_categories()
         return context
 
     def form_valid(self, form):
@@ -59,6 +63,7 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
             return redirect('catalog:product_list')
         return super().dispatch(request, *args, **kwargs)
 
+@method_decorator(cache_page(60 * 15), name='dispatch')  # кеш на 15 минут
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
