@@ -1,8 +1,10 @@
+from itertools import product
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
 from catalog.models import Product, Version, Category
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ModeratorProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 class HomeView(TemplateView):
@@ -42,11 +44,16 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('catalog:product_detail', args=[self.object.pk])
 
-    def dispatch(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if self.object.owner != request.user:
-            return redirect('catalog:product_list')
-        return super().dispatch(request, *args, **kwargs)
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.get_object().owner:
+            return ProductForm
+        elif user.has_perm("can_unpublish_product") and user.has_perm("can_change_description") and user.has_perm("can_change_category"):
+            return ModeratorProductForm
+        else:
+            raise PermissionDenied
+
+
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
