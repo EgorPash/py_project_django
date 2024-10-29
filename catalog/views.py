@@ -29,11 +29,6 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'catalog/product_form.html'
     success_url = reverse_lazy('catalog:product_list')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = get_categories()
-        return context
-
     def form_valid(self, form):
         form.instance.owner = self.request.user  # Привязка к текущему пользователю
         return super().form_valid(form)
@@ -63,7 +58,7 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
             return redirect('catalog:product_list')
         return super().dispatch(request, *args, **kwargs)
 
-@method_decorator(cache_page(60 * 15), name='dispatch')  # кеш на 15 минут
+
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
@@ -94,3 +89,9 @@ class VersionUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('catalog:product_detail', args=[self.object.product.pk])
+
+class CategoryListView(ListView):
+    model = Category
+
+    def get_queryset(self):
+        return get_categories()
