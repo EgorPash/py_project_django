@@ -30,3 +30,8 @@ class VersionForm(BootstrapFormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['is_current'].widget.attrs.update({'class': 'form-check-input'})
+
+class ModeratorProductForm(BootstrapFormMixin, forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['description', 'category', 'is_published']
